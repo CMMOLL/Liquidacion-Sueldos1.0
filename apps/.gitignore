@@ -1,0 +1,8 @@
+node_modules/
+.env
+.env.*
+dist/
+docs/.vite/    # por si Vite crea metadata
+*.log
+.DS_Store
+Thumbs.db
