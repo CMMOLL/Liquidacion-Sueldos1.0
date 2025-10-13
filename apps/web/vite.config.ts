@@ -1,13 +1,15 @@
+// apps/web/vite.config.ts
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  root: './src',         // donde pusimos index.html y assets
+  root: './src',
   build: {
-    outDir: '../dist',   // salida dentro de apps/web/dist
+    outDir: '../../docs',  // publica directo en /docs
     emptyOutDir: true
   },
   server: {
     port: 5173,
     strictPort: true
-  }
+  },
+  base: '' // importante para Pages
 });
