@@ -4,12 +4,13 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   root: './src',
   build: {
-    outDir: '../../docs',  // publica directo en /docs
+    // desde apps/web/src → .. (web) → .. (apps) → .. (raíz) → docs
+    outDir: '../../../docs',
     emptyOutDir: true
   },
   server: {
     port: 5173,
     strictPort: true
   },
-  base: '' // importante para Pages
+  base: ''
 });
