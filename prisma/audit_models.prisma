@@ -1,0 +1,28 @@
+
+/// Modelos de auditoría y snapshots (importar/mergear en prisma/schema.prisma)
+
+model LiquidacionSnapshot {
+  id            String   @id @default(cuid())
+  periodo       String
+  agenteId      String
+  estado        String
+  contextHash   String   // hash del contexto usado (parámetros + entradas)
+  resultadoJson Json     // resultado inmutable
+  creadoPor     String
+  creadoEn      DateTime @default(now())
+
+  @@index([agenteId, periodo])
+  @@index([contextHash])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  tabla      String
+  registroId String
+  accion     String   // INSERT|UPDATE|DELETE
+  cambios    Json     // diff del cambio
+  usuario    String
+  timestamp  DateTime @default(now())
+
+  @@index([tabla, registroId])
+}
