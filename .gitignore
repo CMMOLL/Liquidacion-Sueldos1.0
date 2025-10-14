@@ -1,1 +1,13 @@
 node_modules
+node_modules/
+dist/
+coverage/
+.env
+*.log
+*.tsbuildinfo
+.vscode/
+.DS_Store
+prisma/dev.db
+prisma/*.db-journal
+playwright-report/
+test-results/
