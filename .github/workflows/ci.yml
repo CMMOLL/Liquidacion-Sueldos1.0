@@ -18,22 +18,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
+          cache: 'pnpm'
 
-      - name: Install pnpm
+      - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9
           run_install: false
 
-      - name: Check pnpm version
-        run: pnpm -v
-
       - name: Install dependencies
         run: pnpm install
 
       - name: Lint (optional)
-        run: pnpm -w lint || echo "no lint step yet"
+        run: pnpm lint || echo "No lint script yet"
 
       - name: Build (optional)
-        run: pnpm -w build || echo "no build step yet"
+        run: pnpm build || echo "No build script yet"
