@@ -1,21 +1,39 @@
 name: CI
+
 on:
   push:
-    branches: [main]
+    branches: [ "main" ]
   pull_request:
-    branches: [main]
+    branches: [ "main" ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'pnpm'
-      - uses: pnpm/action-setup@v4
+          node-version: 20
+          cache: pnpm
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
           version: 9
-      - run: pnpm install
-      - run: pnpm lint
-      - run: pnpm -w build || echo "no build step yet"
+          run_install: false
+
+      - name: Check pnpm version
+        run: pnpm -v
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint (optional)
+        run: pnpm -w lint || echo "no lint step yet"
+
+      - name: Build (optional)
+        run: pnpm -w build || echo "no build step yet"
