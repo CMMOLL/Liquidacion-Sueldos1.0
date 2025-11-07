@@ -7,29 +7,35 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  ci:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: pnpm
 
-      - name: Install pnpm
-        run: npm install -g pnpm@9
+      # pnpm robusto con Corepack (evita "pnpm not found")
+      - name: Enable Corepack
+        run: corepack enable
 
-      - name: Check pnpm
-        run: pnpm -v
+      - name: Prepare pnpm
+        run: corepack prepare pnpm@9 --activate
 
-      - name: Install dependencies
+      - name: Versions
+        run: node -v && pnpm -v
+
+      - name: Install deps
         run: pnpm install
 
-      - name: Lint
-        run: pnpm run lint || echo "No lint script defined"
+      # Estos steps NO rompen el build si aún no existen scripts
+      - name: Lint (soft)
+        run: pnpm run lint || echo "::notice ::No lint script"
 
-      - name: Build web (si existe)
-        run: pnpm run build:web || echo "No build:web defined"
+      - name: Build (soft)
+        run: pnpm run build:web || pnpm run build || echo "::notice ::No build script"
